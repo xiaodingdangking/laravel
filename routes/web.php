@@ -18,7 +18,8 @@ Route::get('/', function () {
 Route::any('/login/login','login\LoginController@login');
 Route::any('/login/do_login','login\LoginController@do_login');
 Route::any('/login/wechat','login\LoginController@wechat');
-
+Route::any('/wechat','login\WechatController@demo');
+Route::any('/login/demowechat','login\WechatController@demowechat');
 Route::group(['middleware'=>['Login']],function(){
     Route::any('/admin/index','admin\AdminController@index');
 });

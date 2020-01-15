@@ -94,14 +94,15 @@ class LoginController extends Common
     public function wechat()
     {
         //带参数的二维码
+        $status = md5(uniqid());
         $access_token=$this->getToken();
         $url="https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token={$access_token}";
         $postData=[
-            'expire_seconds'=> 60,
+            'expire_seconds'=> 2,
             'action_name'=>'QR_STR_SCENE',
             'action_info'=> [
                 "scene"=> [
-                    'scene_str'=>"唯一标识"
+                    'scene_str'=>$status,
                 ],
             ],
         ];
@@ -109,7 +110,6 @@ class LoginController extends Common
         $res=$this->Post($url,$postData);
         $res=json_decode($res,true);
         $data="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=".$res['ticket'];
-        var_dump($data);die;
-        return view('login.wechat');
+        return view('login.wechat',['data'=>$data,'status'=>$status]);
     }
 }
